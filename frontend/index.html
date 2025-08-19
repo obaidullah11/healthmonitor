@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Monitoring System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    <h1>Health Monitor</h1>
+                </div>
+                <p class="subtitle">AI-Powered Health Status Prediction</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>Enter Your Health Data</h2>
+                    <p>Provide your vital signs for real-time health status prediction</p>
+                </div>
+
+                <form id="healthForm" class="health-form">
+                    <div class="form-group">
+                        <label for="heartRate">
+                            <i class="fas fa-heart"></i>
+                            Heart Rate (BPM)
+                        </label>
+                        <input 
+                            type="number" 
+                            id="heartRate" 
+                            name="heartRate" 
+                            min="30" 
+                            max="200" 
+                            step="1" 
+                            required
+                            placeholder="e.g., 75"
+                        >
+                        <div class="input-info">
+                            <span class="normal-range">Normal: 60-100 BPM</span>
+                            <span class="warning-range">Warning: 40-59 or 101-140 BPM</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="temperature">
+                            <i class="fas fa-thermometer-half"></i>
+                            Body Temperature (°C)
+                        </label>
+                        <input 
+                            type="number" 
+                            id="temperature" 
+                            name="temperature" 
+                            min="35.0" 
+                            max="42.0" 
+                            step="0.1" 
+                            required
+                            placeholder="e.g., 36.8"
+                        >
+                        <div class="input-info">
+                            <span class="normal-range">Normal: 36.1-37.2°C</span>
+                            <span class="warning-range">Warning: 35.0-36.0 or 37.3-38.0°C</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="spo2">
+                            <i class="fas fa-lungs"></i>
+                            Blood Oxygen Level (SpO₂ %)
+                        </label>
+                        <input 
+                            type="number" 
+                            id="spo2" 
+                            name="spo2" 
+                            min="70" 
+                            max="100" 
+                            step="1" 
+                            required
+                            placeholder="e.g., 98"
+                        >
+                        <div class="input-info">
+                            <span class="normal-range">Normal: 95-100%</span>
+                            <span class="warning-range">Warning: 90-94%</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">
+                            <i class="fas fa-user"></i>
+                            Age (years)
+                        </label>
+                        <input 
+                            type="number" 
+                            id="age" 
+                            name="age" 
+                            min="1" 
+                            max="120" 
+                            step="1" 
+                            required
+                            placeholder="e.g., 35"
+                        >
+                        <div class="input-info">
+                            <span class="info-text">Enter your age in years</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-tachometer-alt"></i>
+                            Blood Pressure (mmHg)
+                        </label>
+                        <div class="bp-inputs">
+                            <input 
+                                type="number" 
+                                id="bpSystolic" 
+                                name="bpSystolic" 
+                                min="70" 
+                                max="250" 
+                                step="1" 
+                                required
+                                placeholder="Systolic (e.g., 120)"
+                            >
+                            <span class="bp-separator">/</span>
+                            <input 
+                                type="number" 
+                                id="bpDiastolic" 
+                                name="bpDiastolic" 
+                                min="40" 
+                                max="150" 
+                                step="1" 
+                                required
+                                placeholder="Diastolic (e.g., 80)"
+                            >
+                        </div>
+                        <div class="input-info">
+                            <span class="normal-range">Normal: 90-120 / 60-80 mmHg</span>
+                            <span class="warning-range">High: >120/80 mmHg</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cholesterol">
+                            <i class="fas fa-vial"></i>
+                            Total Cholesterol (mg/dL)
+                        </label>
+                        <input 
+                            type="number" 
+                            id="cholesterol" 
+                            name="cholesterol" 
+                            min="100" 
+                            max="400" 
+                            step="1" 
+                            required
+                            placeholder="e.g., 180"
+                        >
+                        <div class="input-info">
+                            <span class="normal-range">Desirable: <200 mg/dL</span>
+                            <span class="warning-range">High: ≥240 mg/dL</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-search"></i>
+                        Predict Health Status
+                    </button>
+                </form>
+            </div>
+
+            <div class="results-container" id="resultsContainer" style="display: none;">
+                <div class="results-header">
+                    <h3>Health Prediction Results</h3>
+                    <button class="close-btn" id="closeResults">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="prediction-card" id="predictionCard">
+                    <div class="status-indicator" id="statusIndicator">
+                        <i class="status-icon" id="statusIcon"></i>
+                        <span class="status-text" id="statusText"></span>
+                    </div>
+
+                    <div class="confidence-meter">
+                        <label>Confidence Score</label>
+                        <div class="meter-container">
+                            <div class="meter-fill" id="confidenceMeter"></div>
+                            <span class="confidence-text" id="confidenceText"></span>
+                        </div>
+                    </div>
+
+                    <div class="suggested-action">
+                        <h4>Suggested Action</h4>
+                        <p id="suggestedAction"></p>
+                    </div>
+
+                    <div class="prediction-details">
+                        <h4>Prediction Details</h4>
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Model Used:</span>
+                                <span class="detail-value" id="modelUsed"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Response Time:</span>
+                                <span class="detail-value" id="responseTime"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+                <div class="loading-content">
+                    <div class="spinner"></div>
+                    <p>Analyzing your health data...</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Health Monitoring System. Powered by AI.</p>
+                <div class="footer-links">
+                    <a href="/docs" target="_blank">API Documentation</a>
+                    <a href="/health" target="_blank">System Health</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
