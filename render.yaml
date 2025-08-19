@@ -1,0 +1,34 @@
+services:
+  # Health Monitoring API Service
+  - type: web
+    name: health-monitor-api
+    runtime: python
+    plan: free  # Using free tier
+    
+    # Build configuration
+    buildCommand: |
+      echo "Installing dependencies..."
+      pip install -r requirements.txt
+      echo "Training models..."
+      python train_models.py
+      echo "Build complete!"
+    
+    # Start command
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    
+    # Health check endpoint
+    healthCheckPath: /api/v1/health
+    
+    # Environment variables
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.16
+      - key: DEBUG
+        value: false
+      - key: HOST
+        value: 0.0.0.0
+      # PORT is automatically set by Render
+      # Add other environment variables as needed
+      
+    # Auto-deploy from main branch
+    autoDeploy: true

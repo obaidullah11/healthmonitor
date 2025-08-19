@@ -1,0 +1,95 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Model files (large files, train on deployment)
+# Uncomment these lines if you want to exclude model files
+# models/*.pkl
+# models/*.h5
+# models/*.tflite
+
+# Data files (optional, depends on your needs)
+# data/raw/*
+# data/processed/*
+# Keep synthetic dataset
+!data/synthetic_dataset.csv
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Redis
+dump.rdb
+
+# Documentation build files
+docs/_build/
+site/
+
+# Deployment specific
+*.pid
+.render/

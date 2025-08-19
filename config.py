@@ -1,10 +1,14 @@
 import os
+from pathlib import Path
 from typing import Dict, Any
 from dotenv import load_dotenv
 
 load_dotenv()
 
 class Config:
+    # Base paths - use absolute paths for deployment
+    BASE_DIR = Path(__file__).parent.absolute()
+    
     # API Configuration
     API_TITLE = "Health Monitoring System API"
     API_VERSION = "1.0.0"
@@ -15,13 +19,17 @@ class Config:
     PORT = int(os.getenv("PORT", 8000))
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"
     
-    # Model Configuration
-    MODEL_PATH = "models/"
+    # Environment - useful for conditional logic
+    ENVIRONMENT = os.getenv("ENVIRONMENT", "development")
+    IS_PRODUCTION = ENVIRONMENT == "production"
+    
+    # Model Configuration - use absolute paths
+    MODEL_PATH = str(BASE_DIR / "models")
     RANDOM_FOREST_MODEL_FILE = "random_forest_model.pkl"
     NEURAL_NETWORK_MODEL_FILE = "neural_network_model.tflite"
     
-    # Data Configuration
-    DATA_PATH = "data/"
+    # Data Configuration - use absolute paths
+    DATA_PATH = str(BASE_DIR / "data")
     SYNTHETIC_DATASET_FILE = "synthetic_dataset.csv"
     
     # Health Parameter Ranges
@@ -86,6 +94,8 @@ class Config:
     REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
     REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
     REDIS_DB = int(os.getenv("REDIS_DB", 0))
+    REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", None)
+    REDIS_URL = os.getenv("REDIS_URL", None)  # For Render Redis addon
     
     @classmethod
     def get_health_ranges(cls) -> Dict[str, Any]:
