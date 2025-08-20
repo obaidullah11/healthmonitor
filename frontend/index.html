@@ -14,17 +14,17 @@
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-heartbeat"></i>
-                    <h1>Health Monitor</h1>
+                    <h1>Heart Disease Risk Assessment</h1>
                 </div>
-                <p class="subtitle">AI-Powered Health Status Prediction</p>
+                <p class="subtitle">AI-Powered Cardiovascular Disease Risk Prediction</p>
             </div>
         </header>
 
         <main class="main-content">
             <div class="form-container">
                 <div class="form-header">
-                    <h2>Enter Your Health Data</h2>
-                    <p>Provide your vital signs for real-time health status prediction</p>
+                    <h2>Cardiovascular Risk Assessment</h2>
+                    <p>Enter your vital signs and health parameters to assess your 10-year heart disease risk</p>
                 </div>
 
                 <form id="healthForm" class="health-form">
@@ -166,16 +166,21 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <i class="fas fa-search"></i>
-                        Predict Health Status
-                    </button>
+                    <div style="margin-top: 20px;">
+                        <button type="submit" class="submit-btn unified-assessment-btn" id="unifiedAssessmentBtn">
+                            <i class="fas fa-heartbeat"></i>
+                            Complete Health & CVD Risk Assessment
+                        </button>
+                        <p style="text-align: center; margin: 10px 0; color: #666; font-size: 0.9rem;">
+                            Unified assessment combining general health status + comprehensive cardiovascular risk analysis
+                        </p>
+                    </div>
                 </form>
             </div>
 
             <div class="results-container" id="resultsContainer" style="display: none;">
                 <div class="results-header">
-                    <h3>Health Prediction Results</h3>
+                    <h3>Comprehensive Health Assessment Results</h3>
                     <button class="close-btn" id="closeResults">
                         <i class="fas fa-times"></i>
                     </button>

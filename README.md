@@ -1,19 +1,22 @@
-# Health Monitoring System
+# Heart Disease Risk Assessment System
 
-An AI-powered health monitoring system that provides real-time health status predictions based on vital signs input. The system uses machine learning models to analyze heart rate, body temperature, blood oxygen levels, age, blood pressure, and cholesterol to determine health status.
+An AI-powered cardiovascular disease risk assessment system that provides comprehensive heart disease risk predictions based on vital signs and health parameters. The system uses multiple risk assessment methods including traditional risk factors, Framingham Risk Score, and machine learning models to determine your 10-year cardiovascular disease risk.
 
 ## Features
 
-- **Real-time Health Prediction**: Get instant health status predictions (Normal, Warning, Critical)
-- **6 Health Parameters**: Heart rate, temperature, SpO2, age, blood pressure, and cholesterol
-- **Multiple AI Models**: Random Forest and Neural Network models with automatic fallback
-- **Age-Adjusted Analysis**: Smart health thresholds based on patient age
-- **Comprehensive Validation**: Input validation with medical range checks
-- **Modern Web Interface**: Beautiful, responsive frontend with real-time feedback
-- **REST API**: Well-documented API with Swagger/OpenAPI support
-- **Real Dataset Support**: Load and process real health datasets (Cleveland Heart Disease)
-- **Performance Optimized**: Sub-500ms response times
-- **Cloud Ready**: Deployable on AWS, GCP, or PythonAnywhere
+- **Cardiovascular Risk Assessment**: Get comprehensive 10-year heart disease risk predictions
+- **Multiple Risk Scoring Methods**: 
+  - Traditional cardiovascular risk factors
+  - Modified Framingham Risk Score
+  - AI-based risk assessment using ML models
+- **6 Key Health Parameters**: Heart rate, temperature, SpO2, age, blood pressure, and cholesterol
+- **Personalized Recommendations**: Specific actionable advice based on your risk factors
+- **Risk Factor Identification**: Identifies both modifiable and non-modifiable risk factors
+- **Dual Prediction System**: Both general health status and specific heart disease risk
+- **Cleveland Heart Disease Dataset**: Trained on real cardiovascular patient data
+- **Modern Web Interface**: Beautiful, responsive frontend with detailed risk visualization
+- **REST API**: Well-documented API with heart disease specific endpoints
+- **Performance Optimized**: Sub-100ms response times for risk calculations
 
 ## System Architecture
 
@@ -93,9 +96,68 @@ http://localhost:8000/api/v1
 #### 1. Health Prediction
 **POST** `/predict-health`
 
-Predict health status based on vital signs.
+Predict general health status based on vital signs.
+
+#### 2. Heart Disease Risk Assessment
+**POST** `/predict-heart-disease`
+
+Comprehensive cardiovascular disease risk assessment.
 
 **Request Body:**
+```json
+{
+  "heart_rate": 85,
+  "temperature": 36.8,
+  "spo2": 96,
+  "age": 55,
+  "blood_pressure_systolic": 145,
+  "blood_pressure_diastolic": 92,
+  "cholesterol": 250
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Heart disease risk assessment completed",
+  "data": {
+    "risk_level": "High",
+    "risk_percentage": 18.5,
+    "confidence_score": 0.85,
+    "risk_factors": [
+      {
+        "factor": "Hypertension",
+        "severity": "Major",
+        "value": "145/92 mmHg",
+        "target": "<120/80 mmHg",
+        "modifiable": true
+      },
+      {
+        "factor": "High Cholesterol",
+        "severity": "Major",
+        "value": "250 mg/dL",
+        "target": "<200 mg/dL",
+        "modifiable": true
+      }
+    ],
+    "recommendations": [
+      "🚨 Schedule an appointment with a cardiologist within 2 weeks",
+      "📊 Request complete cardiac workup including ECG and stress test",
+      "🩺 Monitor blood pressure daily and maintain a log",
+      "🥗 Adopt a heart-healthy diet (Mediterranean or DASH)",
+      "💊 Discuss blood pressure and cholesterol medications with your doctor"
+    ],
+    "risk_scores": {
+      "traditional": {"score": 8, "level": "high"},
+      "framingham": {"percentage": 18.5, "level": "moderate"},
+      "ai_based": {"percentage": 20.0, "level": "high", "ml_based": true}
+    }
+  }
+}
+```
+
+**Request Body (Original Health Prediction):**
 ```json
 {
   "heart_rate": 75,

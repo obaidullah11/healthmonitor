@@ -1,0 +1,116 @@
+{
+  "success": true,
+  "message": "Complete health assessment completed successfully",
+  "data": {
+    "general_health_assessment": {
+      "health_status": "Warning",
+      "confidence_score": 0.87,
+      "suggested_action": "Monitor closely and consider consulting a doctor if symptoms persist",
+      "prediction_details": {
+        "model_used": "random_forest",
+        "prediction_time_ms": 45.23,
+        "features": {
+          "heart_rate": 95,
+          "temperature": 36.8,
+          "spo2": 94,
+          "age": 45,
+          "blood_pressure": "140/85",
+          "cholesterol": 220
+        }
+      },
+      "risk_summary": {
+        "risk_level": "Moderate",
+        "risk_percentage": 15.3,
+        "major_risk_factors": [
+          "Hypertension",
+          "High Cholesterol"
+        ]
+      }
+    },
+    "comprehensive_cvd_assessment": {
+      "risk_level": "Moderate",
+      "risk_percentage": 15.3,
+      "confidence_score": 0.82,
+      "risk_factors": [
+        {
+          "factor": "Hypertension",
+          "severity": "Major",
+          "value": "140/85 mmHg",
+          "target": "<120/80 mmHg",
+          "modifiable": true
+        },
+        {
+          "factor": "High Cholesterol",
+          "severity": "Major",
+          "value": "220 mg/dL",
+          "target": "<200 mg/dL",
+          "modifiable": true
+        },
+        {
+          "factor": "Elevated Resting Heart Rate",
+          "severity": "Minor",
+          "value": "95 BPM",
+          "target": "60-80 BPM",
+          "modifiable": true
+        },
+        {
+          "factor": "Low Oxygen Saturation",
+          "severity": "Minor",
+          "value": "94%",
+          "target": ">95%",
+          "modifiable": true
+        }
+      ],
+      "recommendations": [
+        "👨‍⚕️ Discuss cardiovascular risk with your primary care physician",
+        "🩺 Monitor blood pressure daily and maintain a log",
+        "🧂 Reduce sodium intake to <2,300mg per day",
+        "🥗 Adopt a heart-healthy diet (Mediterranean or DASH)",
+        "🏃‍♂️ Engage in 150 minutes of moderate exercise weekly",
+        "🧘‍♂️ Practice stress reduction techniques (meditation, yoga)"
+      ],
+      "risk_scores": {
+        "traditional": {
+          "score": 6,
+          "level": "moderate",
+          "factors": [
+            "Age 45-54 years",
+            "Prehypertension",
+            "Borderline high cholesterol",
+            "Elevated resting heart rate",
+            "Low oxygen saturation (<95%)"
+          ]
+        },
+        "framingham": {
+          "percentage": 12.8,
+          "level": "moderate",
+          "note": "Simplified calculation without HDL/smoking data"
+        },
+        "ai_based": {
+          "percentage": 18.5,
+          "level": "moderate",
+          "confidence": 0.85,
+          "ml_based": true
+        }
+      },
+      "processing_time_ms": 156.78
+    },
+    "combined_meta": {
+      "api_version": "1.0.0",
+      "total_processing_time_ms": 201.45,
+      "assessment_timestamp": 1703123456.789,
+      "models_used": {
+        "general_health": "random_forest",
+        "cvd_assessment": "multi_method_combined"
+      },
+      "input_parameters": {
+        "heart_rate": 95,
+        "temperature": 36.8,
+        "spo2": 94,
+        "age": 45,
+        "blood_pressure": "140/85",
+        "cholesterol": 220
+      }
+    }
+  }
+}

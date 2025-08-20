@@ -1,8 +1,8 @@
-# API Routes Documentation - Health Monitoring System
+# API Routes Documentation - Heart Disease Risk Assessment System
 
 ## Overview
 
-This document provides a clear overview of all routes available in the Health Monitoring System, including REST API endpoints and frontend routes.
+This document provides a comprehensive overview of all routes available in the Heart Disease Risk Assessment System, including REST API endpoints for both general health monitoring and specialized cardiovascular disease risk assessment.
 
 ---
 
@@ -38,9 +38,9 @@ http://localhost:8000
 
 ---
 
-### 2. Health Prediction 🏥
+### 2. General Health Prediction with Heart Disease Risk 🏥❤️
 **POST /api/v1/predict-health**
-- **Description**: Analyze health parameters and predict status
+- **Description**: Analyze health parameters and predict general health status with integrated heart disease risk assessment
 - **Request Body**:
 ```json
 {
@@ -77,6 +77,12 @@ http://localhost:8000
         "critical": [],
         "warning": []
       }
+    },
+    "heart_disease_assessment": {
+      "risk_level": "Low",
+      "risk_percentage": 5.2,
+      "major_risk_factors": [],
+      "primary_recommendation": "Maintain healthy lifestyle with regular checkups"
     }
   }
 }
@@ -84,7 +90,92 @@ http://localhost:8000
 
 ---
 
-### 3. System Health Check ✅
+### 3. Heart Disease Risk Assessment 🫀
+**POST /api/v1/predict-heart-disease**
+- **Description**: Comprehensive cardiovascular disease risk assessment using multiple methodologies
+- **Request Body**:
+```json
+{
+  "heart_rate": 85,
+  "temperature": 36.8,
+  "spo2": 96,
+  "age": 55,
+  "blood_pressure_systolic": 145,
+  "blood_pressure_diastolic": 92,
+  "cholesterol": 250
+}
+```
+- **Response**:
+```json
+{
+  "success": true,
+  "message": "Heart disease risk assessment completed",
+  "data": {
+    "risk_level": "High",
+    "risk_percentage": 18.5,
+    "confidence_score": 0.85,
+    "risk_factors": [
+      {
+        "factor": "Hypertension",
+        "severity": "Major",
+        "value": "145/92 mmHg",
+        "target": "<120/80 mmHg",
+        "modifiable": true
+      },
+      {
+        "factor": "High Cholesterol",
+        "severity": "Major",
+        "value": "250 mg/dL",
+        "target": "<200 mg/dL",
+        "modifiable": true
+      },
+      {
+        "factor": "Age 55-64 years",
+        "severity": "Major",
+        "value": "55 years",
+        "target": "N/A",
+        "modifiable": false
+      }
+    ],
+    "recommendations": [
+      "🚨 Schedule an appointment with a cardiologist within 2 weeks",
+      "📊 Request complete cardiac workup including ECG and stress test",
+      "🩺 Monitor blood pressure daily and maintain a log",
+      "🥗 Adopt a heart-healthy diet (Mediterranean or DASH)",
+      "💊 Discuss blood pressure and cholesterol medications with your doctor",
+      "🏃‍♂️ Engage in 150 minutes of moderate exercise weekly"
+    ],
+    "risk_scores": {
+      "traditional": {
+        "score": 8,
+        "level": "high",
+        "factors": ["Hypertension", "High cholesterol", "Age 55-64 years"]
+      },
+      "framingham": {
+        "percentage": 18.5,
+        "level": "moderate",
+        "note": "Simplified calculation without HDL/smoking data"
+      },
+      "ai_based": {
+        "percentage": 20.0,
+        "level": "high",
+        "confidence": 0.85,
+        "ml_based": true
+      }
+    },
+    "processing_time_ms": 85.3
+  }
+}
+```
+- **Risk Levels**:
+  - **Low**: <10% 10-year cardiovascular risk
+  - **Moderate**: 10-20% 10-year cardiovascular risk
+  - **High**: 20-30% 10-year cardiovascular risk
+  - **Very High**: >30% 10-year cardiovascular risk
+
+---
+
+### 4. System Health Check ✅
 **GET /api/v1/health**
 - **Description**: Check API and model status
 - **Response**:
@@ -107,7 +198,7 @@ http://localhost:8000
 
 ---
 
-### 4. Model Comparison 🤖
+### 5. Model Comparison 🤖
 **POST /api/v1/compare-models**
 - **Description**: Compare predictions from all available models
 - **Request Body**: Same as `/predict-health`
@@ -149,7 +240,7 @@ http://localhost:8000
 
 ---
 
-### 5. Model Information ℹ️
+### 6. Model Information ℹ️
 **GET /api/v1/model-info**
 - **Description**: Get information about available models
 - **Response**:
@@ -185,7 +276,7 @@ http://localhost:8000
 
 ---
 
-### 6. Input Validation 🔍
+### 7. Input Validation 🔍
 **POST /api/v1/validate-input**
 - **Description**: Validate health data without making predictions
 - **Request Body**: Same as `/predict-health`
@@ -233,9 +324,19 @@ frontend/
 class HealthMonitor {
     apiBaseUrl = 'http://localhost:8000/api/v1';
     
-    // Main prediction call
+    // General health prediction
     async predictHealth(healthData) {
         const response = await fetch(`${this.apiBaseUrl}/predict-health`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(healthData)
+        });
+        return response.json();
+    }
+    
+    // Heart disease risk assessment
+    async predictHeartDiseaseRisk(healthData) {
+        const response = await fetch(`${this.apiBaseUrl}/predict-heart-disease`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(healthData)
@@ -277,7 +378,8 @@ class HealthMonitor {
 |--------|----------|---------|----------------|
 | GET | / | API info | No |
 | GET | /api/v1/health | System health | No |
-| POST | /api/v1/predict-health | Health prediction | Yes (7 params) |
+| POST | /api/v1/predict-health | General health prediction | Yes (7 params) |
+| POST | /api/v1/predict-heart-disease | CVD risk assessment | Yes (7 params) |
 | POST | /api/v1/compare-models | Model comparison | Yes (7 params) |
 | GET | /api/v1/model-info | Model details | No |
 | POST | /api/v1/validate-input | Input validation | Yes (7 params) |
@@ -302,6 +404,21 @@ curl -X POST "http://localhost:8000/api/v1/predict-health" \
     "blood_pressure_systolic": 120,
     "blood_pressure_diastolic": 80,
     "cholesterol": 180
+  }'
+```
+
+#### Heart Disease Risk Assessment
+```bash
+curl -X POST "http://localhost:8000/api/v1/predict-heart-disease" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "heart_rate": 85,
+    "temperature": 36.8,
+    "spo2": 96,
+    "age": 55,
+    "blood_pressure_systolic": 145,
+    "blood_pressure_diastolic": 92,
+    "cholesterol": 250
   }'
 ```
 
@@ -338,6 +455,24 @@ fetch('http://localhost:8000/api/v1/predict-health', {
         console.log('Health Status:', data.data.health_status);
         console.log('Confidence:', data.data.confidence_score);
         console.log('Action:', data.data.suggested_action);
+    }
+});
+
+// Heart Disease Risk Assessment
+fetch('http://localhost:8000/api/v1/predict-heart-disease', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(healthData)
+})
+.then(response => response.json())
+.then(data => {
+    if (data.success) {
+        console.log('Risk Level:', data.data.risk_level);
+        console.log('10-Year Risk:', data.data.risk_percentage + '%');
+        console.log('Risk Factors:', data.data.risk_factors);
+        console.log('Recommendations:', data.data.recommendations);
     }
 });
 ```
